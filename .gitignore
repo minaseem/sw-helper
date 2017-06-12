@@ -3,3 +3,4 @@ node_modules/
 /src/*.js
 /src/*.js.map
 index.js.map
+/demo/node_modules/

@@ -12,8 +12,8 @@ interface IFetch {
     strategy: string;
     cacheName: string;
 }
-var updateCache = function (request: any) {
-    var requestClone = request.clone();
+var updateCache:<T>(Request: T, cacheName: string) => Promise<T> = function (request: Request){
+    var requestClone: Request = request.clone();
     return fetch(requestClone)
         .then(function (response) {
             if (!response) {
@@ -40,10 +40,10 @@ export default ({strategy, cacheName}: IFetch) => {
                     .then(function (response) {
                         if (response) {
                             console.log("[ServiceWorker] Found in Cache", e.request.url, response);
-                            updateCache(e.request);
+                            updateCache(e.request, cacheName);
                             return response;
                         } else {
-                            var resp = updateCache(e.request);
+                            var resp = updateCache(e.request, cacheName);
                             return resp;
                         }
                     })

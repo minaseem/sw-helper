@@ -1,0 +1,20 @@
+{
+  "presets": [
+    [
+      "latest",
+      {
+        "es2015": {
+          "modules": false
+        }
+      }
+    ]
+  ],
+  "plugins": [
+    [
+      "transform-react-jsx",
+      {
+        "pragma": "preact.h"
+      }
+    ]
+  ]
+}
