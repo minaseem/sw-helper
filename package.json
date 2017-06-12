@@ -1,0 +1,11 @@
+{
+  "name": "serviceWorker",
+  "version": "0.0.1",
+  "devDependencies": {
+    "typescript": "^2.3.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/minaseem/serviceWorker.git"
+  }
+}
