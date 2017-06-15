@@ -8,5 +8,9 @@
     "removeComments": false,
     "noUnusedLocals": true,
     "declaration": false
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "demo"
+  ]
 }
