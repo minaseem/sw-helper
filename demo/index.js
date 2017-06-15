@@ -3,11 +3,12 @@
  */
 
 import {h, render} from 'preact';
-
+import './style.css';
 import preact from 'preact';
 
 render((
     <div>
-        Hello, world
+        Hello, world!
+        <div>This is a service worker test111234</div>
     </div>
 ), document.body);

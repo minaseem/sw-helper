@@ -13,27 +13,28 @@ module.exports = {
     watch: true,
     devtool: 'eval',
     entry: {
-        'app': [
-            './index'
-        ],
-        'serviceWorker': './sw'
+        'app': './index',
+        'sw': './serviceWorker/sw.js'
     },
     devServer: {
         port: PORT
     },
     output: {
+        path: path.resolve(__dirname + '/dist/'),
         filename: '[name].js',
     },
     module: {
         rules: [
             {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
+            {test: /\.css$/, use: ExtractTextPlugin.extract({fallback: "style-loader", use: "css-loader"})},
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
             inject: true,
-            template: path.resolve('', 'index.html'),
-        })
+            template: path.resolve('index.html'),
+        }),
+        new ExtractTextPlugin("styles.css")
     ]
 
 }
