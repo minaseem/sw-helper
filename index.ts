@@ -25,5 +25,5 @@ export default (options: IOptions) => {
     var {cacheFiles = defaultOptions.cacheFiles, cacheName = defaultOptions.cacheName, strategy = defaultOptions.strategy} = options;
     install({cacheFiles, cacheName})
     activate({cacheName})
-    fetch({cacheName, strategy})
+    fetch({cacheName, strategy, cacheFiles})
 }

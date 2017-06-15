@@ -5,21 +5,20 @@
 'use strict';
 import {Window} from './window'
 import cacheFirst from './strategies/cacheFirst';
+import {IOptions} from './IOptions'
 
 declare var self: Window;
 
-interface IFetch {
-    strategy: string;
-    cacheName: string;
-}
 
-export default ({strategy, cacheName = "v1"}: IFetch) => {
+export default ({strategy, cacheName, cacheFiles}: IOptions) => {
     self.addEventListener('fetch', function (e: any) {
         console.log('[ServiceWorker] Fetch', e.request.url);
         switch (strategy) {
             case 'cacheFirst':
-                cacheFirst(e, cacheName);
+                cacheFirst(e, cacheName, cacheFiles);
                 break;
+            default:
+                cacheFirst(e, cacheName, cacheFiles);
         }
     });
 }

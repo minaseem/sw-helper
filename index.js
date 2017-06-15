@@ -15,6 +15,6 @@ exports.default = function (options) {
     var _a = options.cacheFiles, cacheFiles = _a === void 0 ? defaultOptions.cacheFiles : _a, _b = options.cacheName, cacheName = _b === void 0 ? defaultOptions.cacheName : _b, _c = options.strategy, strategy = _c === void 0 ? defaultOptions.strategy : _c;
     install_1.default({ cacheFiles: cacheFiles, cacheName: cacheName });
     activate_1.default({ cacheName: cacheName });
-    fetch_1.default({ cacheName: cacheName, strategy: strategy });
+    fetch_1.default({ cacheName: cacheName, strategy: strategy, cacheFiles: cacheFiles });
 };
 //# sourceMappingURL=index.js.map
