@@ -9,6 +9,6 @@ import preact from 'preact';
 render((
     <div>
         Hello, world!
-        <div>This is a service worker test111234</div>
+        <div>This is a service worker test</div>
     </div>
 ), document.body);
