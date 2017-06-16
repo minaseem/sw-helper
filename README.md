@@ -4,7 +4,7 @@ Highly inspired from `sw-toolbox`
 
 # Usage
 ```js
-import sw from '../../index'
+import sw from 'serviceWorker'
 
 const cacheFiles = [
     'styles.css',
