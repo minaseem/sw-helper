@@ -5,7 +5,15 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 50px;
     color: white;
     text-align: center;
+}
+
+img {
+    height: 100px;
+    width: 200px;
+}
+img {
+    height: 100px;
+    width: 200px;
 }

@@ -5,7 +5,17 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 50px;
     color: white;
     text-align: center;
 }
+
+img {
+    height: 100px;
+    width: 200px;
+}
+img {
+    height: 100px;
+    width: 200px;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzdHlsZXMuY3NzIiwic291cmNlUm9vdCI6IiJ9*/
