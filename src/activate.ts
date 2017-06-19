@@ -10,7 +10,7 @@ declare var Promise: any;
 export default ({cacheName}: IActivate) => {
     self.addEventListener('activate', function (e: any) {
         console.log('[ServiceWorker] Activated');
-        //delete caches with cachName other than current cacheName
+        (<any>self).clients.claim()
         e.waitUntil(
             caches.keys().then(function (cacheNames: string[]) {
                 return Promise.all(cacheNames.map(function (thisCacheName) {
@@ -21,7 +21,6 @@ export default ({cacheName}: IActivate) => {
                         return false;
                     }
                 }));
-            })
-        );
+            }))
     });
 }

@@ -10,15 +10,16 @@ import {IOptions} from './IOptions'
 declare var self: Window;
 
 
-export default ({strategy, cacheName, cacheFiles}: IOptions) => {
+export default ({strategy, cacheName, cacheFiles, prefetchFiles}: IOptions) => {
     self.addEventListener('fetch', function (e: any) {
         console.log('[ServiceWorker] Fetch', e.request.url);
+        const cacheList = Array.prototype.concat(cacheFiles, prefetchFiles)
         switch (strategy) {
             case 'cacheFirst':
-                cacheFirst(e, cacheName, cacheFiles);
+                cacheFirst(e, cacheName, cacheList);
                 break;
             default:
-                cacheFirst(e, cacheName, cacheFiles);
+                cacheFirst(e, cacheName, cacheList);
         }
     });
 }

@@ -7,23 +7,28 @@ import install from './src/install'
 import activate from './src/activate'
 import fetch from './src/fetch'
 
-declare var Object: Object;
-
-interface Object {
-    assign: Function,
-    keys: Function,
-    prototype: any
+interface IInput {
+    prefetchFiles?: string[]
+    cacheFiles?: string[]
+    cacheName?: string
+    strategy?: string
 }
 
 var defaultOptions: IOptions = {
+    prefetchFiles: [],
     cacheFiles: [],
     cacheName: 'v1',
     strategy: 'CacheFirst'
 }
 
-export default (options: IOptions) => {
-    var {cacheFiles = defaultOptions.cacheFiles, cacheName = defaultOptions.cacheName, strategy = defaultOptions.strategy} = options;
-    install({cacheFiles, cacheName})
+export default (options: IInput) => {
+    var {
+        cacheFiles = defaultOptions.cacheFiles,
+        cacheName = defaultOptions.cacheName,
+        strategy = defaultOptions.strategy,
+        prefetchFiles = defaultOptions.prefetchFiles
+    } = options
+    install({prefetchFiles, cacheName})
     activate({cacheName})
-    fetch({cacheName, strategy, cacheFiles})
+    fetch({cacheName, strategy, cacheFiles, prefetchFiles})
 }

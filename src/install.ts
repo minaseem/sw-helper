@@ -6,16 +6,16 @@ import {Window} from './window'
 declare var self: Window;
 interface IInstall {
     cacheName: string;
-    cacheFiles: string[];
+    prefetchFiles: string[];
 }
 
-export default ({cacheName, cacheFiles}: IInstall) => {
+export default ({cacheName, prefetchFiles}: IInstall) => {
     self.addEventListener('install', function (e: any) {
         console.log('[ServiceWorker] Installed');
         e.waitUntil(
             caches.open(cacheName).then(function (cache) {
                 console.log('[ServiceWorker] Caching cacheFiles');
-                return cache.addAll(cacheFiles);
+                return cache.addAll(prefetchFiles);
             })
                 .then(function () {
                     return self.skipWaiting();

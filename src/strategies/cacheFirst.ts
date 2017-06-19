@@ -15,7 +15,7 @@ var updateCache: <T>(O: IUpdateCache) => Promise<T> = function (options: IUpdate
             } else {
                 var responseClone = response.clone();
                 caches.open(options.cacheName).then(function (cache) {
-                    cache.put(options.request.url, responseClone);
+                    cache.put(options.request, responseClone);
                     console.log('[ServiceWorker] New Data Cached', options.request.url);
                 });
             }
@@ -38,7 +38,7 @@ const cachingRequired: (a: Request, b: string[]) => boolean = ({mode, url}, cach
 export default (e: any, cacheName: string, cacheFiles: string[]) => {
     if (cachingRequired(e.request, cacheFiles)) {
         e.respondWith(
-            caches.match(e.request.url)
+            caches.match(e.request)
                 .then(function (response) {
                     if (response) {
                         console.log("[ServiceWorker] Found in Cache", e.request.url, response);
