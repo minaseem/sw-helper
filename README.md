@@ -5,15 +5,17 @@ This library provides an easy approach towards working with service worker
 ```js
 import sw from 'serviceWorker'
 
+const prefetchFiles = [
+    'css/modal.css'
+]
 const cacheFiles = [
     'styles.css',
     'app.js',
     ...
 ]
-
 const strategy = 'cacheFirst'
 
-sw({cacheName: 'v1', cacheFiles, strategy});
+sw({cacheName: 'v1', cacheFiles, prefetchFiles, strategy});
 
 ```
 
@@ -25,7 +27,19 @@ And you are done!
 
 This the name of the cache. Change the name when you want to flush all the resources cached by browser.
 
+**prefetchFiles** : string[]
+
+These are the files that should be cached as soon as page loads (Actually whenever service worker is installed).
+
+```js
+const prefetchFiles = [ 'css/modal.css' ]
+
+```
+
+
 **cacheFiles** : string[]
+
+These are the files that should be cached whenever its first request is made.
 
 `cacheFiles` accepts regex too.
 
@@ -51,5 +65,3 @@ Currently following caching strategies are supported
 
 PS - we will increase the list going forward
 
-**TODO**
-separate prefetch and cache list
