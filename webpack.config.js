@@ -7,7 +7,7 @@
 const webpack = require('webpack');
 module.exports = {
     entry: {
-        'index': './index.js'
+        'index': './main.js'
     },
     output: {
         filename: 'index.js',

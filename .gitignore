@@ -4,7 +4,7 @@ node_modules/
 /src/strategies/*.js
 /src/strategies/*.js.map
 /src/*.js.map
-index.js
-index.js.map
+main.js
+main.js.map
 npm-debug.log
 /demo/node_modules/
