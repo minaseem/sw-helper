@@ -11,6 +11,8 @@ module.exports = {
     },
     output: {
         filename: 'index.js',
+        library: 'sw-helper',
+        libraryTarget: "umd"
     },
     module: {
         rules: [
