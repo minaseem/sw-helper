@@ -65,5 +65,5 @@ Currently following caching strategies are supported
 
 - `cacheFirst`: Every time a resource is needed, it is first served from the cache and then cache is updated in the background so that user gets the latest data next time.
 
-PS - we will increase the list going forward
+PS - we will increase the list going forward.
 
