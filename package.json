@@ -2,7 +2,6 @@
   "name": "sw-helper",
   "version": "0.0.7",
   "devDependencies": {
-    "browserify": "^14.4.0",
     "typescript": "^2.3.4",
     "webpack": "^3.0.0"
   },
