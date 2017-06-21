@@ -16,7 +16,8 @@
     "webpack-dev-server": "^2.4.1"
   },
   "dependencies": {
-    "preact": "^8.1.0"
+    "preact": "^8.1.0",
+    "sw-helper": "0.0.3"
   },
   "scripts": {
     "start": "webpack-dev-server",
