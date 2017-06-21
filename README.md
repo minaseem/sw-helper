@@ -2,7 +2,7 @@ This library provides an easy approach towards working with service worker.
 <br/>
 Contains Vanilla JS. Does not depend on any library.
 
-#Install
+# Install
 ```
 npm install sw-helper --save
 ```
