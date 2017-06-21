@@ -2,9 +2,14 @@ This library provides an easy approach towards working with service worker.
 <br/>
 Contains Vanilla JS. Does not depend on any library.
 
+#Install
+```
+npm install sw-helper --save
+```
+
 # Usage
 ```js
-import sw from 'serviceWorker'
+import sw from 'sw-helper'
 
 const prefetchFiles = [
     'css/modal.css'
