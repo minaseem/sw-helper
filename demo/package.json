@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "preact": "^8.1.0",
-    "sw-helper": "0.0.4",
+    "sw-helper": "0.0.7",
     "webpack-dev-server": "^2.5.0"
   },
   "scripts": {
