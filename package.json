@@ -2,7 +2,9 @@
   "name": "sw-helper",
   "version": "0.0.3",
   "devDependencies": {
-    "typescript": "^2.3.4"
+    "browserify": "^14.4.0",
+    "typescript": "^2.3.4",
+    "webpack": "^3.0.0"
   },
   "repository": {
     "type": "git",
@@ -10,6 +12,9 @@
   },
   "author": {
     "name": "Imamudin Naseem <naseem1992@gmail.com>"
+  },
+  "scripts": {
+    "build": "webpack"
   },
   "keywords": [
     "service-worker",

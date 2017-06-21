@@ -18,4 +18,4 @@ exports.default = function (options) {
     activate_1.default({ cacheName: cacheName });
     fetch_1.default({ cacheName: cacheName, strategy: strategy, cacheFiles: cacheFiles, prefetchFiles: prefetchFiles });
 };
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=sw.js.map
