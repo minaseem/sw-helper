@@ -63,7 +63,7 @@ To cache index.html, specifying `index.html` in `cacheFiles` array is mandatory.
 const cacheFiles = [ '.js' , 'index.html']
 ```
 
-**strategy**
+**strategy** 
 
 Currently following caching strategies are supported
 
