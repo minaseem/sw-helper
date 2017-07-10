@@ -87,11 +87,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var install_1 = __webpack_require__(1);
 var activate_1 = __webpack_require__(2);
 var fetch_1 = __webpack_require__(3);
+var identity = function (a) {
+    return a;
+};
 var defaultOptions = {
     prefetchFiles: [],
     cacheFiles: [],
     cacheName: 'v1',
-    strategy: 'CacheFirst'
+    strategy: 'CacheFirst',
+    getKey: identity
 };
 exports.default = function (options) {
     var _a = options.cacheFiles,
@@ -101,10 +105,12 @@ exports.default = function (options) {
         _c = options.strategy,
         strategy = _c === void 0 ? defaultOptions.strategy : _c,
         _d = options.prefetchFiles,
-        prefetchFiles = _d === void 0 ? defaultOptions.prefetchFiles : _d;
+        prefetchFiles = _d === void 0 ? defaultOptions.prefetchFiles : _d,
+        _e = options.getKey,
+        getKey = _e === void 0 ? defaultOptions.getKey : _e;
     install_1.default({ prefetchFiles: prefetchFiles, cacheName: cacheName });
     activate_1.default({ cacheName: cacheName });
-    fetch_1.default({ cacheName: cacheName, strategy: strategy, cacheFiles: cacheFiles, prefetchFiles: prefetchFiles });
+    fetch_1.default({ cacheName: cacheName, strategy: strategy, cacheFiles: cacheFiles, prefetchFiles: prefetchFiles, getKey: getKey });
 };
 //# sourceMappingURL=main.js.map
 
@@ -177,16 +183,17 @@ exports.default = function (_a) {
     var strategy = _a.strategy,
         cacheName = _a.cacheName,
         cacheFiles = _a.cacheFiles,
-        prefetchFiles = _a.prefetchFiles;
+        prefetchFiles = _a.prefetchFiles,
+        getKey = _a.getKey;
     self.addEventListener('fetch', function (e) {
         console.log('[ServiceWorker] Fetch', e.request.url);
         var cacheList = Array.prototype.concat(cacheFiles, prefetchFiles);
         switch (strategy) {
             case 'cacheFirst':
-                cacheFirst_1.default(e, cacheName, cacheList);
+                cacheFirst_1.default(e, cacheName, cacheList, getKey);
                 break;
             default:
-                cacheFirst_1.default(e, cacheName, cacheList);
+                cacheFirst_1.default(e, cacheName, cacheList, getKey);
         }
     });
 };
@@ -208,7 +215,7 @@ var updateCache = function (options) {
         } else {
             var responseClone = response.clone();
             caches.open(options.cacheName).then(function (cache) {
-                cache.put(options.request, responseClone);
+                cache.put(options.getKey(options.request), responseClone);
                 console.log('[ServiceWorker] New Data Cached', options.request.url);
             });
         }
@@ -229,15 +236,17 @@ var cachingRequired = function (_a, cacheFiles) {
         url = _a.url;
     return mode === 'navigate' && cacheFiles.indexOf('index.html') > -1 || matchUrl(cacheFiles, url);
 };
-exports.default = function (e, cacheName, cacheFiles) {
+exports.default = function (e, cacheName, cacheFiles, getKey) {
     if (cachingRequired(e.request, cacheFiles)) {
-        e.respondWith(caches.match(e.request).then(function (response) {
+        e.respondWith(caches.match(getKey(e.request)).then(function (response) {
             if (response) {
                 console.log("[ServiceWorker] Found in Cache", e.request.url, response);
-                updateCache({ request: e.request, cacheName: cacheName, cacheFiles: cacheFiles });
+                setTimeout(function () {
+                    return updateCache({ request: e.request, cacheName: cacheName, cacheFiles: cacheFiles, getKey: getKey });
+                }, 0);
                 return response;
             } else {
-                var resp = updateCache({ request: e.request, cacheName: cacheName, cacheFiles: cacheFiles });
+                var resp = updateCache({ request: e.request, cacheName: cacheName, cacheFiles: cacheFiles, getKey: getKey });
                 return resp;
             }
         }));
