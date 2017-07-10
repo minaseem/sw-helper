@@ -12,13 +12,17 @@ interface IInput {
     cacheFiles?: string[]
     cacheName?: string
     strategy?: string
+    getKey?: Function
 }
+type I = <T>(value: T) => T;
+const identity: I = <T>(a: T): T => a;
 
 var defaultOptions: IOptions = {
     prefetchFiles: [],
     cacheFiles: [],
     cacheName: 'v1',
-    strategy: 'CacheFirst'
+    strategy: 'CacheFirst',
+    getKey: identity
 }
 
 export default (options: IInput) => {
@@ -26,9 +30,10 @@ export default (options: IInput) => {
         cacheFiles = defaultOptions.cacheFiles,
         cacheName = defaultOptions.cacheName,
         strategy = defaultOptions.strategy,
-        prefetchFiles = defaultOptions.prefetchFiles
+        prefetchFiles = defaultOptions.prefetchFiles,
+        getKey = defaultOptions.getKey
     } = options
     install({prefetchFiles, cacheName})
     activate({cacheName})
-    fetch({cacheName, strategy, cacheFiles, prefetchFiles})
+    fetch({cacheName, strategy, cacheFiles, prefetchFiles, getKey})
 }

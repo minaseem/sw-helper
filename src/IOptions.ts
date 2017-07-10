@@ -7,4 +7,5 @@ export interface IOptions {
     cacheFiles: string[];
     strategy: string;
     prefetchFiles: string[];
+    getKey: Function;
 }

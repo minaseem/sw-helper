@@ -56,6 +56,19 @@ const cacheFiles = [ '.js' ]
 
 ```
 
+**getKey** : Function : Request => any
+
+It is the function to specify key of the cache. If not specified,  key is Request
+
+To cache all the `js` files, use
+
+
+```js
+const getKey = request => request.url
+
+```
+
+
 To cache index.html, specifying `index.html` in `cacheFiles` array is mandatory.
 
  To cache all js files and index.html, use
