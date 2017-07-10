@@ -5,6 +5,7 @@ interface IUpdateCache {
     request: Request;
     cacheName: string;
     cacheFiles: string[];
+    getKey: Function
 }
 var updateCache: <T>(O: IUpdateCache) => Promise<T> = function (options: IUpdateCache) {
     var requestClone: Request = options.request.clone();
@@ -15,7 +16,7 @@ var updateCache: <T>(O: IUpdateCache) => Promise<T> = function (options: IUpdate
             } else {
                 var responseClone = response.clone();
                 caches.open(options.cacheName).then(function (cache) {
-                    cache.put(options.request, responseClone);
+                    cache.put(options.getKey(options.request), responseClone);
                     console.log('[ServiceWorker] New Data Cached', options.request.url);
                 });
             }
@@ -35,17 +36,17 @@ const matchUrl: (a: string[], b: string) => boolean = (cacheFiles, url) => {
 const cachingRequired: (a: Request, b: string[]) => boolean = ({mode, url}, cacheFiles) =>
 (mode === 'navigate' && cacheFiles.indexOf('index.html') > -1) || matchUrl(cacheFiles, url);
 
-export default (e: any, cacheName: string, cacheFiles: string[]) => {
+export default (e: any, cacheName: string, cacheFiles: string[], getKey: Function) => {
     if (cachingRequired(e.request, cacheFiles)) {
         e.respondWith(
-            caches.match(e.request)
+            caches.match(getKey(e.request))
                 .then(function (response) {
                     if (response) {
                         console.log("[ServiceWorker] Found in Cache", e.request.url, response);
-                        updateCache({request: e.request, cacheName, cacheFiles});
+                        setTimeout(() => updateCache({request: e.request, cacheName, cacheFiles, getKey}), 0);
                         return response;
                     } else {
-                        var resp = updateCache({request: e.request, cacheName, cacheFiles});
+                        var resp = updateCache({request: e.request, cacheName, cacheFiles, getKey});
                         return resp;
                     }
                 })
