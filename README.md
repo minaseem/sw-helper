@@ -60,7 +60,6 @@ const cacheFiles = [ '.js' ]
 
 It is the function to specify key of the cache. If not specified,  key is Request
 
-To cache all the `js` files, use
 
 
 ```js
