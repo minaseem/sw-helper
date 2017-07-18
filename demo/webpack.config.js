@@ -8,7 +8,7 @@ const path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const PORT = 3002
+const PORT = 3001
 module.exports = {
     devtool: '#inline-source-map',
     entry: {
