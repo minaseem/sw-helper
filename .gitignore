@@ -1,11 +1,7 @@
 /.idea
 node_modules/
-/src/*.js
-/src/strategies/*.js
 /src/strategies/*.js.map
 /src/*.js.map
-main.js
-main.js.map
+index.js.map
 npm-debug.log
 /demo/node_modules/
-index.js.map
