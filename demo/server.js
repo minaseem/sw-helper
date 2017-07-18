@@ -7,7 +7,7 @@ var path = require('path');
 var app = express();
 
 app.use('/', express.static(path.resolve(__dirname, 'dist')));
-var port = 3003;
+var port = 3004;
 app.listen(port);
 console.log('listening to port ' + port);
 

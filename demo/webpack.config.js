@@ -10,7 +10,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const PORT = 3002
 module.exports = {
-    watch: true,
     devtool: '#inline-source-map',
     entry: {
         'app': './index',

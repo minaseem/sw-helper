@@ -17,11 +17,12 @@
   },
   "dependencies": {
     "preact": "^8.1.0",
-    "sw-helper": "0.0.7",
+    "sw-helper": "^1.3.0",
     "webpack-dev-server": "^2.5.0"
   },
   "scripts": {
     "start": "webpack-dev-server",
+    "express-start": "node server.js",
     "build": "webpack"
   }
 }
