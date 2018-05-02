@@ -5,3 +5,4 @@ node_modules/
 index.js.map
 npm-debug.log
 /demo/node_modules/
+/demo/package-lock.json

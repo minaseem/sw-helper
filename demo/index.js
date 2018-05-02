@@ -2,7 +2,8 @@
  * Created by imamudinnaseem on 6/12/17.
  */
 
-import {h, render, Component} from 'preact';
+/*
+import {render, Component} from 'preact';
 import './style.css';
 import preact from 'preact';
 
@@ -26,5 +27,6 @@ class App extends Component {
         )
     }
 }
+*/
 
-render(<App />, document.body);
+//render(<div ></div>, document.body);

@@ -5,12 +5,12 @@
 
 const webpack = require('webpack');
 const path = require('path');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const PORT = 3001
 module.exports = {
-    devtool: '#inline-source-map',
+    mode: 'development',
     entry: {
         'app': './index',
         'sw': './serviceWorker/sw.js'
@@ -25,7 +25,8 @@ module.exports = {
     module: {
         rules: [
             {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
-            {test: /\.css$/, use: ExtractTextPlugin.extract({fallback: "style-loader", use: "css-loader"})},
+            /*{test: /\.css$/, use: ExtractTextPlugin.extract({fallback: "style-loader", use: "css-loader"})},*/
+            {test: /\.css$/, use: [ExtractTextPlugin.loader, "css-loader"]}
         ]
     },
     plugins: [
