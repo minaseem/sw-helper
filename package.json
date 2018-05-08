@@ -1,6 +1,6 @@
 {
   "name": "sw-helper",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "devDependencies": {
     "typescript": "^2.8.3",
     "webpack": "^3.0.0"
