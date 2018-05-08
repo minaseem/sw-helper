@@ -3,15 +3,14 @@
  * Created by imamudinnaseem on 6/9/17.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = function (_a) {
-    var cacheName = _a.cacheName;
+exports.default = ({ cacheName }) => {
     self.addEventListener('activate', function (e) {
-        console.log('[ServiceWorker] Activated');
+        console.log('[SW] Activated');
         self.clients.claim();
         e.waitUntil(caches.keys().then(function (cacheNames) {
             return Promise.all(cacheNames.map(function (thisCacheName) {
                 if (thisCacheName !== cacheName) {
-                    console.log('[ServiceWorker] Removing Cached Files from Cache - ', thisCacheName);
+                    console.log('[SW] Removing Cached Files from Cache - ', thisCacheName);
                     return caches.delete(thisCacheName);
                 }
                 else {

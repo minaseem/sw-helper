@@ -1,11 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = function (_a) {
-    var cacheName = _a.cacheName, prefetchFiles = _a.prefetchFiles;
+exports.default = ({ cacheName, prefetchFiles }) => {
     self.addEventListener('install', function (e) {
-        console.log('[ServiceWorker] Installed');
+        console.log('[SW] Installed');
         e.waitUntil(caches.open(cacheName).then(function (cache) {
-            console.log('[ServiceWorker] Caching cacheFiles');
+            console.log('[SW] Caching cacheFiles');
             return cache.addAll(prefetchFiles);
         })
             .then(function () {

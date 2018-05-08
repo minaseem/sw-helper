@@ -2,14 +2,15 @@
  * Created by imamudinnaseem on 6/9/17.
  */
 
-import {IOptions} from './src/IOptions';
+import {IOptions} from './src/interfaces/IOptions';
 import install from './src/install'
 import activate from './src/activate'
 import fetch from './src/fetch'
+import {IConfig} from "./src/interfaces/Iconfig";
 
 interface IInput {
     prefetchFiles?: string[]
-    cacheFiles?: string[]
+    cacheFiles?: IConfig[]
     cacheName?: string
     strategy?: string
     getKey?: Function
@@ -20,7 +21,7 @@ const identity: I = <T>(a: T): T => a;
 var defaultOptions: IOptions = {
     prefetchFiles: [],
     cacheFiles: [],
-    cacheName: 'v1',
+    cacheName: 'SW-V1',
     strategy: 'CacheFirst',
     getKey: identity
 }

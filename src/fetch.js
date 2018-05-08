@@ -3,18 +3,42 @@
  */
 'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
-var cacheFirst_1 = require("./strategies/cacheFirst");
-exports.default = function (_a) {
-    var strategy = _a.strategy, cacheName = _a.cacheName, cacheFiles = _a.cacheFiles, prefetchFiles = _a.prefetchFiles, getKey = _a.getKey;
+const cacheFirst_1 = require("./strategies/cacheFirst");
+const cacheFirstUpdate_1 = require("./strategies/cacheFirstUpdate");
+const getConfig = ({ mode, url }, cacheFiles) => {
+    var path = new URL(url).pathname;
+    var config = cacheFiles.find((x) => {
+        if (x.url === 'index.html' && mode === 'navigate') {
+            return true;
+        }
+        else {
+            if (x.url instanceof RegExp) {
+                return x.url.test(path);
+            }
+            else {
+                return path.indexOf(x.url) > -1;
+            }
+        }
+    });
+    return config;
+};
+exports.default = ({ strategy, cacheName, cacheFiles, prefetchFiles, getKey }) => {
     self.addEventListener('fetch', function (e) {
-        console.log('[ServiceWorker] Fetch', e.request.url);
-        var cacheList = Array.prototype.concat(cacheFiles, prefetchFiles);
-        switch (strategy) {
-            case 'cacheFirst':
-                cacheFirst_1.default(e, cacheName, cacheList, getKey);
-                break;
-            default:
-                cacheFirst_1.default(e, cacheName, cacheList, getKey);
+        console.log('[SW] Fetch', e.request.url);
+        const config = getConfig(e.request, cacheFiles);
+        if (config) {
+            const cacheList = Array.prototype.concat(cacheFiles, prefetchFiles);
+            let cachingStrategy = config.strategy || strategy;
+            switch (cachingStrategy) {
+                case 'cacheFirst':
+                    cacheFirst_1.default(e, cacheName, cacheList, getKey, config);
+                    break;
+                case 'cacheFirstUpdate':
+                    cacheFirstUpdate_1.default(e, cacheName, cacheList, getKey, config);
+                    break;
+                default:
+                    cacheFirst_1.default(e, cacheName, cacheList, getKey, config);
+            }
         }
     });
 };

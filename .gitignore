@@ -1,8 +1,8 @@
 /.idea
 node_modules/
-/src/strategies/*.js.map
 /src/*.js.map
 index.js.map
 npm-debug.log
 /demo/node_modules/
 /demo/package-lock.json
+*.js.map
