@@ -2,7 +2,7 @@
  * Created by imamudinnaseem on 6/12/17.
  */
 
-/*
+
 import {render, Component} from 'preact';
 import './style.css';
 import preact from 'preact';
@@ -27,6 +27,6 @@ class App extends Component {
         )
     }
 }
-*/
 
-//render(<div ></div>, document.body);
+
+render(<App ></App>, document.body);

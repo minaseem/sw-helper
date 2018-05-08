@@ -13,7 +13,8 @@ module.exports = {
     mode: 'development',
     entry: {
         'app': './index',
-        'sw': './serviceWorker/sw.js'
+        'sw': './serviceWorker/sw.js'/*,
+        'test': './test'*/
     },
     devServer: {
         port: PORT
