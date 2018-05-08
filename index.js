@@ -3,21 +3,21 @@
  * Created by imamudinnaseem on 6/9/17.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var install_1 = require("./src/install");
-var activate_1 = require("./src/activate");
-var fetch_1 = require("./src/fetch");
-var identity = function (a) { return a; };
+const install_1 = require("./src/install");
+const activate_1 = require("./src/activate");
+const fetch_1 = require("./src/fetch");
+const identity = (a) => a;
 var defaultOptions = {
     prefetchFiles: [],
     cacheFiles: [],
-    cacheName: 'v1',
+    cacheName: 'SW-V1',
     strategy: 'CacheFirst',
     getKey: identity
 };
-exports.default = function (options) {
-    var _a = options.cacheFiles, cacheFiles = _a === void 0 ? defaultOptions.cacheFiles : _a, _b = options.cacheName, cacheName = _b === void 0 ? defaultOptions.cacheName : _b, _c = options.strategy, strategy = _c === void 0 ? defaultOptions.strategy : _c, _d = options.prefetchFiles, prefetchFiles = _d === void 0 ? defaultOptions.prefetchFiles : _d, _e = options.getKey, getKey = _e === void 0 ? defaultOptions.getKey : _e;
-    install_1.default({ prefetchFiles: prefetchFiles, cacheName: cacheName });
-    activate_1.default({ cacheName: cacheName });
-    fetch_1.default({ cacheName: cacheName, strategy: strategy, cacheFiles: cacheFiles, prefetchFiles: prefetchFiles, getKey: getKey });
+exports.default = (options) => {
+    var { cacheFiles = defaultOptions.cacheFiles, cacheName = defaultOptions.cacheName, strategy = defaultOptions.strategy, prefetchFiles = defaultOptions.prefetchFiles, getKey = defaultOptions.getKey } = options;
+    install_1.default({ prefetchFiles, cacheName });
+    activate_1.default({ cacheName });
+    fetch_1.default({ cacheName, strategy, cacheFiles, prefetchFiles, getKey });
 };
 //# sourceMappingURL=index.js.map

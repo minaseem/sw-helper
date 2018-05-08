@@ -1,6 +1,7 @@
 /**
- * Created by imamudinnaseem on 6/15/17.
+ * Created by imamudinnaseem on 5/8/18
  */
+
 import {IConfig} from "../interfaces/Iconfig";
 import idb from '../dao/idb';
 import {ICacheData} from "../interfaces/ICacheData";
@@ -61,6 +62,7 @@ export default (e: any, cacheName: string, cacheFiles: string[], getKey: Functio
                         return idb.getDb(cacheName).then((db: IDBDatabase) => idb.getTimestampForUrl(db, e.request.url)
                             .then((result: ICacheData) => {
                                 if (result && result.timestamp > Date.now()) {
+                                    setTimeout(() => updateCache({request: e.request, cacheName, getKey, config}), 0);
                                     return response;
                                 } else {
                                     console.log("[SW] Cache expired for ", e.request.url);
@@ -68,19 +70,12 @@ export default (e: any, cacheName: string, cacheFiles: string[], getKey: Functio
                                 }
                             }));
                     } else {
+                        setTimeout(() => updateCache({request: e.request, cacheName, getKey, config}), 0);
                         return response;
                     }
                 } else {
                     return updateCache({request: e.request, cacheName, getKey, config});
                 }
-                /*if (response) {
-                    console.log("[SW] Found in Cache", e.request.url, response);
-                    setTimeout(() => updateCache({request: e.request, cacheName, getKey, config}), 0);
-                    return response;
-                } else {
-                    var resp = updateCache({request: e.request, cacheName, getKey, config});
-                    return resp;
-                }*/
             })
     );
 }

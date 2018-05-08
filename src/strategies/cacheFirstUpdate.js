@@ -1,4 +1,7 @@
 "use strict";
+/**
+ * Created by imamudinnaseem on 5/8/18
+ */
 Object.defineProperty(exports, "__esModule", { value: true });
 const idb_1 = require("../dao/idb");
 var updateCache = function (options) {
@@ -48,6 +51,7 @@ exports.default = (e, cacheName, cacheFiles, getKey, config) => {
                 return idb_1.default.getDb(cacheName).then((db) => idb_1.default.getTimestampForUrl(db, e.request.url)
                     .then((result) => {
                     if (result && result.timestamp > Date.now()) {
+                        setTimeout(() => updateCache({ request: e.request, cacheName, getKey, config }), 0);
                         return response;
                     }
                     else {
@@ -57,20 +61,13 @@ exports.default = (e, cacheName, cacheFiles, getKey, config) => {
                 }));
             }
             else {
+                setTimeout(() => updateCache({ request: e.request, cacheName, getKey, config }), 0);
                 return response;
             }
         }
         else {
             return updateCache({ request: e.request, cacheName, getKey, config });
         }
-        /*if (response) {
-            console.log("[SW] Found in Cache", e.request.url, response);
-            setTimeout(() => updateCache({request: e.request, cacheName, getKey, config}), 0);
-            return response;
-        } else {
-            var resp = updateCache({request: e.request, cacheName, getKey, config});
-            return resp;
-        }*/
     }));
 };
-//# sourceMappingURL=cacheFirst.js.map
+//# sourceMappingURL=cacheFirstUpdate.js.map

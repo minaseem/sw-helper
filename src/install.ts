@@ -11,10 +11,10 @@ interface IInstall {
 
 export default ({cacheName, prefetchFiles}: IInstall) => {
     self.addEventListener('install', function (e: any) {
-        console.log('[ServiceWorker] Installed');
+        console.log('[SW] Installed');
         e.waitUntil(
             caches.open(cacheName).then(function (cache) {
-                console.log('[ServiceWorker] Caching cacheFiles');
+                console.log('[SW] Caching cacheFiles');
                 return cache.addAll(prefetchFiles);
             })
                 .then(function () {
