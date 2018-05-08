@@ -16,7 +16,7 @@ var updateCache = function (options) {
                 if (options.config.maxAgeSeconds !== undefined) {
                     idb_1.default.getDb(options.cacheName)
                         .then((db) => idb_1.default.setTimestampForUrl(db, {
-                        url: options.request.url,
+                        url: options.getKey(options.request),
                         timestamp: Date.now() + (options.config.maxAgeSeconds * 1000)
                     }))
                         .then((db) => {
@@ -45,7 +45,7 @@ exports.default = (e, cacheName, cacheFiles, getKey, config) => {
         if (response) {
             console.log("[SW] Found in Cache", e.request.url, response);
             if (config.maxAgeSeconds) {
-                return idb_1.default.getDb(cacheName).then((db) => idb_1.default.getTimestampForUrl(db, e.request.url)
+                return idb_1.default.getDb(cacheName).then((db) => idb_1.default.getTimestampForUrl(db, getKey(e.request))
                     .then((result) => {
                     if (result && result.timestamp > Date.now()) {
                         return response;
@@ -63,14 +63,6 @@ exports.default = (e, cacheName, cacheFiles, getKey, config) => {
         else {
             return updateCache({ request: e.request, cacheName, getKey, config });
         }
-        /*if (response) {
-            console.log("[SW] Found in Cache", e.request.url, response);
-            setTimeout(() => updateCache({request: e.request, cacheName, getKey, config}), 0);
-            return response;
-        } else {
-            var resp = updateCache({request: e.request, cacheName, getKey, config});
-            return resp;
-        }*/
     }));
 };
 //# sourceMappingURL=cacheFirst.js.map

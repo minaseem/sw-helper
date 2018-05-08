@@ -26,7 +26,7 @@ var updateCache: <T>(O: IUpdateCache) => Promise<T | void | Response> = function
                     if (options.config.maxAgeSeconds !== undefined) {
                         idb.getDb(options.cacheName)
                             .then((db: IDBDatabase) => idb.setTimestampForUrl(db, {
-                                url: options.request.url,
+                                url: options.getKey(options.request),
                                 timestamp: Date.now() + (options.config.maxAgeSeconds * 1000)
                             }))
                             .then((db: IDBDatabase) => {
@@ -58,7 +58,7 @@ export default (e: any, cacheName: string, cacheFiles: string[], getKey: Functio
                 if (response) {
                     console.log("[SW] Found in Cache", e.request.url, response);
                     if (config.maxAgeSeconds) {
-                        return idb.getDb(cacheName).then((db: IDBDatabase) => idb.getTimestampForUrl(db, e.request.url)
+                        return idb.getDb(cacheName).then((db: IDBDatabase) => idb.getTimestampForUrl(db, getKey(e.request))
                             .then((result: ICacheData) => {
                                 if (result && result.timestamp > Date.now()) {
                                     return response;
@@ -73,14 +73,6 @@ export default (e: any, cacheName: string, cacheFiles: string[], getKey: Functio
                 } else {
                     return updateCache({request: e.request, cacheName, getKey, config});
                 }
-                /*if (response) {
-                    console.log("[SW] Found in Cache", e.request.url, response);
-                    setTimeout(() => updateCache({request: e.request, cacheName, getKey, config}), 0);
-                    return response;
-                } else {
-                    var resp = updateCache({request: e.request, cacheName, getKey, config});
-                    return resp;
-                }*/
             })
     );
 }
