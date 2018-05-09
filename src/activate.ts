@@ -5,7 +5,6 @@
 interface IActivate {
     cacheName: string;
 }
-declare var Promise: any;
 
 export default ({cacheName}: IActivate) => {
     self.addEventListener('activate', function (e: any) {

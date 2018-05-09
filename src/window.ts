@@ -1,5 +1,5 @@
 export interface Window {
-    skipWaiting: any;
-    waitUntil: any;
-    addEventListener: any;
+    skipWaiting(): void;
+
+    addEventListener(type: string, callback: (arg: any) => void): void;
 }

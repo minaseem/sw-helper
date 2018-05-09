@@ -29,7 +29,7 @@ const getConfig: (e: Request, a: Array<IConfig>) => IConfig | undefined = ({mode
     return config;
 }
 export default ({strategy, cacheName, cacheFiles, prefetchFiles, getKey}: IOptions) => {
-    self.addEventListener('fetch', function (e: any) {
+    self.addEventListener('fetch', function (e: FetchEvent) {
         console.log('[SW] Fetch', e.request.url);
         const config: IConfig | undefined = getConfig(e.request, cacheFiles);
         if (config) {

@@ -4,13 +4,18 @@
 import {Window} from './window'
 
 declare var self: Window;
+
 interface IInstall {
     cacheName: string;
     prefetchFiles: string[];
 }
 
+interface InstallEvent {
+    waitUntil(a: Promise<any>): Promise<Response>;
+}
+
 export default ({cacheName, prefetchFiles}: IInstall) => {
-    self.addEventListener('install', function (e: any) {
+    self.addEventListener('install', function (e: InstallEvent) {
         console.log('[SW] Installed');
         e.waitUntil(
             caches.open(cacheName).then(function (cache) {

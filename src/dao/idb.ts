@@ -8,7 +8,12 @@ var DB_VERSION = 1;
 var STORE_NAME = 'store';
 var URL_PROPERTY = 'url';
 var TIMESTAMP_PROPERTY = 'timestamp';
-var cacheNameToDbPromise: any = {};
+
+interface ICacheNameToDbPromise {
+    [s: string]: Promise<any>;
+}
+
+var cacheNameToDbPromise: ICacheNameToDbPromise = {};
 
 function openDb(cacheName: string) {
     return new Promise(function (resolve, reject) {
@@ -39,7 +44,7 @@ function getDb(cacheName: string) {
     return cacheNameToDbPromise[cacheName];
 }
 
-function setTimestampForUrl(db: IDBDatabase, data: ICacheData) {
+function setTimestampForUrl(db: IDBDatabase, data: ICacheData): Promise<IDBDatabase | DOMException> {
     return new Promise(function (resolve, reject) {
         var transaction: IDBTransaction = db.transaction(STORE_NAME, 'readwrite');
         var objectStore: IDBObjectStore = transaction.objectStore(STORE_NAME);
@@ -84,7 +89,7 @@ function expireOldEntries(db: IDBDatabase) {
 
 
 function expireEntries(db: IDBDatabase) {
-    return expireOldEntries(db).then(function (oldUrls: any[]) {
+    return expireOldEntries(db).then(function (oldUrls: string[]) {
         return oldUrls;
     });
 }

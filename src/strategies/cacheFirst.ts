@@ -51,7 +51,7 @@ var updateCache: <T>(O: IUpdateCache) => Promise<T | void | Response> = function
         });
 };
 
-export default (e: any, cacheName: string, cacheFiles: string[], getKey: Function, config: IConfig) => {
+export default (e: FetchEvent, cacheName: string, cacheFiles: string[], getKey: Function, config: IConfig) => {
     e.respondWith(
         caches.match(getKey(e.request))
             .then(function (response) {
