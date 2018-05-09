@@ -48,7 +48,7 @@ const prefetchFiles = [ 'css/modal.css' ]
 ```
 
 
-**cacheFiles** : string[]
+**cacheFiles** : Object[]
 
 These are the files that should be cached whenever its first request is made.
 
