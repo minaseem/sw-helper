@@ -16,7 +16,7 @@ var updateCache = function (options) {
                 if (options.config.maxAgeSeconds !== undefined) {
                     idb_1.default.getDb(options.cacheName)
                         .then((db) => idb_1.default.setTimestampForUrl(db, {
-                        url: options.getKey(options.request),
+                        url: JSON.stringify(options.getKey(options.request)),
                         timestamp: Date.now() + (options.config.maxAgeSeconds * 1000)
                     }))
                         .then((db) => {
@@ -45,7 +45,7 @@ exports.default = (e, cacheName, cacheFiles, getKey, config) => {
         if (response) {
             console.log("[SW] Found in Cache", e.request.url, response);
             if (config.maxAgeSeconds) {
-                return idb_1.default.getDb(cacheName).then((db) => idb_1.default.getTimestampForUrl(db, getKey(e.request))
+                return idb_1.default.getDb(cacheName).then((db) => idb_1.default.getTimestampForUrl(db, JSON.stringify(getKey(e.request)))
                     .then((result) => {
                     if (result && result.timestamp > Date.now()) {
                         return response;
