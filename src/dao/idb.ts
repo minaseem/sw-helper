@@ -3,11 +3,11 @@
  */
 import {ICacheData} from "../interfaces/ICacheData";
 
-var DB_PREFIX = 'sw-helper-';
-var DB_VERSION = 1;
-var STORE_NAME = 'store';
-var URL_PROPERTY = 'url';
-var TIMESTAMP_PROPERTY = 'timestamp';
+var DB_PREFIX: string = 'sw-helper-';
+var DB_VERSION: number = 1;
+var STORE_NAME: string = 'store';
+var URL_PROPERTY: string = 'url';
+var TIMESTAMP_PROPERTY: string = 'timestamp';
 
 interface ICacheNameToDbPromise {
     [s: string]: Promise<any>;
