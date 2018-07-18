@@ -4,6 +4,7 @@
 import {IConfig} from "../interfaces/Iconfig";
 import idb from '../dao/idb';
 import {ICacheData} from "../interfaces/ICacheData";
+import {FetchEvent} from "../interfaces/FetchEvent";
 
 interface IUpdateCache {
     request: Request;
