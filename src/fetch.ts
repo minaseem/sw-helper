@@ -3,12 +3,14 @@
  */
 
 
+
 'use strict';
 import {Window} from './window'
 import cacheFirst from './strategies/cacheFirst';
 import cacheFirstUpdate from './strategies/cacheFirstUpdate';
 import {IOptions} from './interfaces/IOptions'
 import {IConfig} from "./interfaces/Iconfig";
+import {FetchEvent} from "./interfaces/FetchEvent";
 
 declare var self: Window;
 
