@@ -1,7 +1,7 @@
 /**
  * Created by imamudinnaseem on 6/9/17.
  */
-
+import log from './extras/log';
 
 
 'use strict';
@@ -11,6 +11,8 @@ import cacheFirstUpdate from './strategies/cacheFirstUpdate';
 import {IOptions} from './interfaces/IOptions'
 import {IConfig} from "./interfaces/Iconfig";
 import {FetchEvent} from "./interfaces/FetchEvent";
+
+
 
 declare var self: Window;
 
@@ -32,7 +34,7 @@ const getConfig: (e: Request, a: Array<IConfig>) => IConfig | undefined = ({mode
 }
 export default ({strategy, cacheName, cacheFiles, prefetchFiles, getKey}: IOptions) => {
     self.addEventListener('fetch', function (e: FetchEvent) {
-        console.log('[SW] Fetch', e.request.url);
+        log('[SW] Fetch', e.request.url);
         const config: IConfig | undefined = getConfig(e.request, cacheFiles);
         if (config) {
             const cacheList = Array.prototype.concat(cacheFiles, prefetchFiles)

@@ -1,16 +1,17 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Created by imamudinnaseem on 6/9/17.
  */
-Object.defineProperty(exports, "__esModule", { value: true });
+const log_1 = require("./extras/log");
 exports.default = ({ cacheName }) => {
     self.addEventListener('activate', function (e) {
-        console.log('[SW] Activated');
+        log_1.default('[SW] Activated');
         self.clients.claim();
         e.waitUntil(caches.keys().then(function (cacheNames) {
             return Promise.all(cacheNames.map(function (thisCacheName) {
                 if (thisCacheName !== cacheName) {
-                    console.log('[SW] Removing Cached Files from Cache - ', thisCacheName);
+                    log_1.default('[SW] Removing Cached Files from Cache - ', thisCacheName);
                     return caches.delete(thisCacheName);
                 }
                 else {

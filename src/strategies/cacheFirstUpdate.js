@@ -4,18 +4,16 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 const idb_1 = require("../dao/idb");
+const log_1 = require("../extras/log");
 var updateCache = function (options) {
     var requestClone = options.request.clone();
     return fetch(requestClone)
         .then(function (response) {
-        if (!response || response.status >= 400) {
-            console.log("[SW] Invalid response from fetch ");
-        }
-        else {
+        if (response && response.status === 200) {
             var responseClone = response.clone();
             caches.open(options.cacheName).then(function (cache) {
                 cache.put(options.getKey(options.request), responseClone);
-                console.log('[SW] New Data Cached', options.request.url);
+                log_1.default('[SW] New Data Cached', options.request.url);
                 if (options.config.maxAgeSeconds !== undefined) {
                     idb_1.default.getDb(options.cacheName)
                         .then((db) => idb_1.default.setTimestampForUrl(db, {
@@ -29,7 +27,7 @@ var updateCache = function (options) {
                                 return cache.delete(urlToDelete);
                             });
                             return Promise.all(deletionPromises).then(function () {
-                                console.log('Done with cache cleanup.');
+                                log_1.default('Done with cache cleanup.');
                             });
                         });
                     });
@@ -39,14 +37,14 @@ var updateCache = function (options) {
         return response;
     })
         .catch(function (err) {
-        console.log('[SW] Error Fetching & Caching New Data', err);
+        log_1.default('[SW] Error Fetching & Caching New Data', err);
     });
 };
 exports.default = (e, cacheName, cacheFiles, getKey, config) => {
     e.respondWith(caches.match(getKey(e.request))
         .then(function (response) {
         if (response) {
-            console.log("[SW] Found in Cache", e.request.url, response);
+            log_1.default("[SW] Found in Cache", e.request.url, response);
             if (config.maxAgeSeconds) {
                 return idb_1.default.getDb(cacheName).then((db) => idb_1.default.getTimestampForUrl(db, JSON.stringify(getKey(e.request)))
                     .then((result) => {
@@ -55,7 +53,7 @@ exports.default = (e, cacheName, cacheFiles, getKey, config) => {
                         return response;
                     }
                     else {
-                        console.log("[SW] Cache expired for ", e.request.url);
+                        log_1.default("[SW] Cache expired for ", e.request.url);
                         return updateCache({ request: e.request, cacheName, getKey, config });
                     }
                 }));

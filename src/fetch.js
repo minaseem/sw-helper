@@ -1,8 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Created by imamudinnaseem on 6/9/17.
  */
+const log_1 = require("./extras/log");
 'use strict';
-Object.defineProperty(exports, "__esModule", { value: true });
 const cacheFirst_1 = require("./strategies/cacheFirst");
 const cacheFirstUpdate_1 = require("./strategies/cacheFirstUpdate");
 const getConfig = ({ mode, url }, cacheFiles) => {
@@ -24,7 +26,7 @@ const getConfig = ({ mode, url }, cacheFiles) => {
 };
 exports.default = ({ strategy, cacheName, cacheFiles, prefetchFiles, getKey }) => {
     self.addEventListener('fetch', function (e) {
-        console.log('[SW] Fetch', e.request.url);
+        log_1.default('[SW] Fetch', e.request.url);
         const config = getConfig(e.request, cacheFiles);
         if (config) {
             const cacheList = Array.prototype.concat(cacheFiles, prefetchFiles);
