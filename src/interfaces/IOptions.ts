@@ -9,4 +9,5 @@ export interface IOptions {
     strategy: string;
     prefetchFiles: string[];
     getKey: Function;
+    disableLogging?: boolean;
 }

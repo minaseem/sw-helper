@@ -6,6 +6,7 @@ import {IConfig} from "../interfaces/Iconfig";
 import idb from '../dao/idb';
 import {ICacheData} from "../interfaces/ICacheData";
 import {FetchEvent} from "../interfaces/FetchEvent";
+import log from "../extras/log";
 
 interface IUpdateCache {
     request: Request;
@@ -18,13 +19,11 @@ var updateCache: <T>(O: IUpdateCache) => Promise<T | void | Response> = function
     var requestClone: Request = options.request.clone();
     return fetch(requestClone)
         .then(function (response) {
-            if (!response || response.status >= 400) {
-                console.log("[SW] Invalid response from fetch ");
-            } else {
+            if (response && response.status === 200) {
                 var responseClone = response.clone();
                 caches.open(options.cacheName).then(function (cache) {
                     cache.put(options.getKey(options.request), responseClone);
-                    console.log('[SW] New Data Cached', options.request.url);
+                    log('[SW] New Data Cached', options.request.url);
                     if (options.config.maxAgeSeconds !== undefined) {
                         idb.getDb(options.cacheName)
                             .then((db: IDBDatabase) => idb.setTimestampForUrl(db, {
@@ -39,7 +38,7 @@ var updateCache: <T>(O: IUpdateCache) => Promise<T | void | Response> = function
                                     });
 
                                     return Promise.all(deletionPromises).then(function () {
-                                        console.log('Done with cache cleanup.');
+                                        log('Done with cache cleanup.');
                                     });
                                 })
                             })
@@ -49,7 +48,7 @@ var updateCache: <T>(O: IUpdateCache) => Promise<T | void | Response> = function
             return response;
         })
         .catch(function (err) {
-            console.log('[SW] Error Fetching & Caching New Data', err);
+            log('[SW] Error Fetching & Caching New Data', err);
         });
 };
 
@@ -58,7 +57,7 @@ export default (e: FetchEvent, cacheName: string, cacheFiles: string[], getKey: 
         caches.match(getKey(e.request))
             .then(function (response) {
                 if (response) {
-                    console.log("[SW] Found in Cache", e.request.url, response);
+                    log("[SW] Found in Cache", e.request.url, response);
                     if (config.maxAgeSeconds) {
                         return idb.getDb(cacheName).then((db: IDBDatabase) => idb.getTimestampForUrl(db, JSON.stringify(getKey(e.request)))
                             .then((result: ICacheData) => {
@@ -66,7 +65,7 @@ export default (e: FetchEvent, cacheName: string, cacheFiles: string[], getKey: 
                                     setTimeout(() => updateCache({request: e.request, cacheName, getKey, config}), 0);
                                     return response;
                                 } else {
-                                    console.log("[SW] Cache expired for ", e.request.url);
+                                    log("[SW] Cache expired for ", e.request.url);
                                     return updateCache({request: e.request, cacheName, getKey, config});
                                 }
                             }));

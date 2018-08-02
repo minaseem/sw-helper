@@ -24,5 +24,5 @@ var cacheFiles = [
         maxAgeSeconds: 5
     }];
 
-sw({cacheName: 'NOTES', cacheFiles, strategy, prefetchFiles});
+sw({cacheName: 'NOTES', cacheFiles, strategy, prefetchFiles, disableLogging: true});
 
