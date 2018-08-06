@@ -55,7 +55,7 @@ export default (e: FetchEvent, cacheName: string, cacheFiles: string[], getKey: 
     e.respondWith(
         caches.match(getKey(e.request))
             .then(function (response) {
-                if (response) {
+                if (response && response.status === 200) {
                     log("[SW] Found in Cache", e.request.url, response);
                     if (config.maxAgeSeconds) {
                         return idb.getDb(cacheName).then((db: IDBDatabase) => idb.getTimestampForUrl(db, JSON.stringify(getKey(e.request)))

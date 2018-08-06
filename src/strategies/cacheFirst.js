@@ -40,7 +40,7 @@ var updateCache = function (options) {
 exports.default = (e, cacheName, cacheFiles, getKey, config) => {
     e.respondWith(caches.match(getKey(e.request))
         .then(function (response) {
-        if (response) {
+        if (response && response.status === 200) {
             log_1.default("[SW] Found in Cache", e.request.url, response);
             if (config.maxAgeSeconds) {
                 return idb_1.default.getDb(cacheName).then((db) => idb_1.default.getTimestampForUrl(db, JSON.stringify(getKey(e.request)))
